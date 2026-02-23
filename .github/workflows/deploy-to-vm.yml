@@ -17,8 +17,8 @@ jobs:
           USERNAME: ${{ secrets.DEPLOY_USERNAME }}
           HOST: ${{ secrets.DEPLOY_HOST }}
         run: |
-          echo "$SSH_PRIVATE_KEY" > private_key.pem
-          chmod 600 private_key.pem
+          install -m 600 /dev/null private_key.pem
+          printf '%s\n' "$SSH_PRIVATE_KEY" > private_key.pem
           ssh -i private_key.pem -o StrictHostKeyChecking=no $USERNAME@$HOST << EOF
           mkdir -p /home/$USERNAME/app
           pkill -f "python3 madlibs.py" || true
